@@ -1,0 +1,74 @@
+集合框架就是数据结构的封装
+数组的弊端：一旦初始化之后 长度是固定的。
+什么事集合框架：
+尽管这些容器类非常好用 但是却不能几种统一管理 
+集合框架是为表示和操作集合而规定的一种统一的标准的体系结构
+任何集合框架都包含三大块内容 对外的接口 接口的实现和对象集合运算的算法（底层都对应某一种数据结构的算法）
+
+为什么需要集合框架：
+1 提供功能能的复用 
+2 让程序员专注于业务开发 而不是数据结构和算法
+
+常用的集合类有三种 （集合类存放于java.util包中）
+1 Set  2 List 3 Map
+1 Set（集） ：集合中的对象不按特定方式排序 不允许元素重复
+2 List（列表） ：集合中的对象按照索引位置排序 允许元素重复
+3 Map（映射） ：集合中每一个元素都包含一对key和value 。key不允许对象重复 value值对象可以重复
+
+victor 底层就是一个object的数组  其实就是把数据存到Object数组中
+该数组的元素类型是Object类型 所以集合中只能存储任意类型的对象
+集合中只能存储对象 不能存储基本数据类型的值 （储存值也是底层转化封装）
+在集合中存的是数据引用  而不是数据本身
+
+栈（stack）：数据结构的一种继承Vector类   
+last in first out  后进先出
+例如手枪子弹。底层可以使用数组  也可以使用链表
+存：进栈   出：出栈    操作的是栈顶的位置
+继承的是vector类   底层用的是数组方式来实现的
+官方建议使用 ArrayDeque s2 = new ArrayDeque(); 
+
+ArrayList类：是java集合框架出现之后用来取代vector类的   创建时默认初始化长度为0的空数组 当添加数据add之后才改为容量为10 （java7之后）
+因此比vector类性能更好（vector类初始化长度就是10  比ArrayList占用一点内存）
+和vector区别关系：底层原理一模一样  就vector类add方法使用加了Synchronized
+二者底层原理都是基于数组的算法 一模一样
+vector 线程安全但是性能较低适用于多线程环境   ArrayList没有使用Synchronized 性能较高 但是线程不是很安全
+即使以后在多线程环境下 我们也不使用vector类  已然使用ArrayList类
+ArrayList list = Collections.SynchronizedList（new ArrayList（...））；
+传入一个线程不安全的 new ArrayList（）进去  返回list的就是线程安全的对象
+ArrayList类常用的方法  参照Vector类
+有的时候某个方法需要返回一个ArrayList对象 但是在该方法中如果一个都没有查询到 不会返回null
+几十没有数据也会返回一个空集对象（没有元素的集合）
+例 public ArrayList getA（）｛ //return Collections.emptyList(); 推荐使用这种方式 。   return new ArrayList（）；这种方式简单易用｝
+在java7开始优化 new ArrayList 其实底层创建的使用一个空数组
+
+LinkedList： 也在java.util包中
+是List接口的链接列表实现 他是双向链表  单行队列 双向队列 栈的实现类 都可以用LinkedList表示
+节点和节点之间用引用关系来链接 没有容量 自身提供了栈操作的方法 和链表操作的方法  多种数据结构的合体
+linkedList类是线程不安全的类 在多线程环境下所有保证线程安全
+LinkedList list = Collections.synchronizedList(new LinkedList(...));
+面试题 ：编写一个双向链表。 详见面试题LinkedList .class
+无论是链表还是队列 都特别擅长操作头和尾的节点
+在LinkedList中大多数方法都是xxFirst/xxLast方法
+在LinkedList中存在Object get（int index）方法   表示根据索引位置获取对应的元素： 要少用  擅长保存和删除操作
+但链表没有索引的概念 本不应该有索引 但从java2开始存在了集合框架 让LinkedList作为了list接口的实现类
+List类中提供了根据索引查询元素的方法  LinkedList类内部提供了一个变量来额当作索引 （LinkedList不擅长做这个事情 ：根据索引查元素 查询操作）
+
+根据Vector类 ArrayList类 LinkedList类所有具有的存储特点以及拥有的方法入手 发现共性就往上抽取
+共同的特点：
+1允许元素重复
+2会记录先后添加的顺序 
+根据他们的特点 我就可以指定规范 ：
+遵循该规范的实现类 无论底层算法如何 必须保证允许元素重复 和保证添加先后顺序
+我们给该规范起名 ：List 
+在java中规范我们使用接口来表示  都要implement：List   有序的排列
+
+面向接口编程：
+接口类 = new 一个实现类（） 。尽量用接口去接收。
+
+数组结构算法：插入和删除操作速度低 查询和更改较快 （ArrayList   Vector）
+链表结构算法：插入和删除操作速度快 查询和更改较慢 （LinkedList）
+使用的选择：Vector类最好不要用  用ArrayList 
+如果删除和插入操作频繁 要选择LinkedList类  如果查询操作频繁 要用ArrayList类
+在开发中 使用ArrayList较多 根据具体的需求环境做选择
+
+

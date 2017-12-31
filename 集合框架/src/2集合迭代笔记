@@ -1,0 +1,11 @@
+把集合中的元素 一个一个的遍历取出来（循环）
+无论是队列Queue Deque 还是List接口 Set接口  都可以实现Iterator接口
+List接口的实现类是LinkedList ArrayList和Vector类
+it.next();//获取下一个元素  迭代器指针第一次指向第一个元素之前 并移动指针
+将指针向下移动指针移动一栏
+Iterator it =  list.iterator();//返回按适当顺序在列表的元素上进行迭代的迭代器
+也可以双向迭代
+ Iterator：迭代器对象  只能从上往下迭代   返回boolean类型的hasNext 判断指针后还有没有下一个元素
+ 	Object next（）：获取指针的下一个元素 并且移动指针
+ 	ListIterator：是Iterator的子接口  支持双向迭代 又可以从上往下迭代 又可以从下往上
+ 	
